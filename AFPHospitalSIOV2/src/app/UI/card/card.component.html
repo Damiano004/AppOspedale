@@ -1,0 +1,22 @@
+<div class="card">
+  <p-card [style]="{ width: '20rem', overflow: 'hidden', border: '2px solid #800080', backgroundColor: '#F5F5F5'}">
+      <ng-template #title>{{pz().cognome}} {{pz().nome}}</ng-template>
+      <ng-template #subtitle>Data di nascita: {{pz().data_nascita | date:'dd/MM/YYYY'}}</ng-template>
+      <p>
+        Codice Paziente:  {{pz().codice}}<br>
+        Codice fiscale:   {{pz().codice_fiscale}}
+      </p>
+      <div class="status">
+        <p>CODICE {{pz().codice_colore}}</p>
+        <p-divider layout="vertical"/>
+        <p>{{pz().stato}}</p>
+      </div>
+      <br>
+      <ng-template #footer>
+          <div class="buttons">
+              <p-button label="TRASFERISCI" severity="secondary" class="w-full" styleClass="w-full" (click)="api.traferisciPaziente(pz().id_paziente)"/>
+              <p-button label="DIMETTI" class="w-full" styleClass="w-full" (click)="api.dimettiPaziente(pz().id_paziente)"/>
+          </div>
+      </ng-template>
+  </p-card>
+</div>
