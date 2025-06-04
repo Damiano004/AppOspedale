@@ -2,17 +2,34 @@ import {Component, computed, inject, signal} from '@angular/core';
 import {CodiceColore, CreazionePaziente, StatoPZ} from '../../core/models/Paziente.model';
 import {FormsModule} from '@angular/forms';
 import {AFPHospitalAPIService} from '../../core/services/afphospital-api.service';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ListboxModule } from 'primeng/listbox';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-accetta-pz',
   imports: [
-    FormsModule
+    FormsModule,
+    DatePickerModule,
+    InputTextModule,
+    FloatLabelModule,
+    ListboxModule,
+    ButtonModule
   ],
   templateUrl: './accetta-pz.component.html',
   styleUrl: './accetta-pz.component.scss'
 })
 export class AccettaPzComponent {
   readonly #AFPHospitalAPI = inject(AFPHospitalAPIService);
+  readonly options = [
+  { name: '⚪ BIANCO', value: 'BIANCO' },
+  { name: '🟢 VERDE', value: 'VERDE' },
+  { name: '🔵 AZZURRO', value: 'AZZURRO' },
+  { name: '🟠 ARANCIONE', value: 'ARANCIONE' },
+  { name: '🔴 ROSSO', value: 'ROSSO' }
+];
 
   /**
    * -- ANAGRAFICA

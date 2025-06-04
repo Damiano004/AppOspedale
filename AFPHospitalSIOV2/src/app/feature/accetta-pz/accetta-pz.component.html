@@ -1,51 +1,40 @@
-<div class="form">
-  <label for="nome">Nome</label>
-  <input
-    type="text"
-    id="nome"
-    placeholder="Nome"
-    [(ngModel)]="nome"
-  >
+  <h1 class="title">ACCETTA PAZIENTI</h1>
+  <div class="form">
+    <p-floatlabel variant="on">
+      <label for="nome">Nome</label>
+      <input class="input" pInputText id="nome" [(ngModel)]="nome" autocomplete="off" />
+    </p-floatlabel>
 
-  <label for="cognome">Cognome</label>
-  <input
-    type="text"
-    id="cognome"
-    placeholder="Cognome"
-    [(ngModel)]="cognome"
-  >
+    <p-floatlabel variant="on">
+      <label for="cognome">Cognome</label>
+      <input class="input" pInputText id="cognome" [(ngModel)]="cognome" autocomplete="off" />
+    </p-floatlabel>
 
-  <label for="dataNascita">Data di nascita</label>
-  <input
-    type="date"
-    id="dataNascita"
-    placeholder="Data di nascita"
-    [(ngModel)]="dataNascita"
-  >
+    <div class="input grouped_input">
+      <label for="dataNascita">Data di nascita</label>
+      <p-datepicker [style]="{width:'100%'}" id="dataNascita" [showIcon]="true" [(ngModel)]="dataNascita"/>
+    </div>
 
-  <label for="codiceFiscale">Codice fiscale</label>
-  <input
-    type="text"
-    id="codiceFiscale"
-    placeholder="Codice fiscale"
-    [(ngModel)]="codiceFiscale"
-  >
-  <label for="codiceColore">Codice colore</label>
-  <select
-    id="codiceColore"
-    [(ngModel)]="codiceColore"
-  >
-    <option value="BIANCO">BIANCO</option>
-    <option value="VERDE">VERDE</option>
-    <option value="AZZURRO">AZZURRO</option>
-    <option value="ARANCIONE">ARANCIONE</option>
-    <option value="ROSSO">🔴ROSSO</option>
-  </select>
+    <p-floatlabel variant="on">
+      <label for="codiceFiscale">Codice fiscale</label>
+      <input class="input" pInputText id="codiceFiscale" [(ngModel)]="codiceFiscale" autocomplete="off" />
+    </p-floatlabel>
 
-  <button
-    (click)="accettaPaziente()"
-    [disabled]="!validateInput()"
-  >
-    ACCETTA PAZIENTE
-  </button>
-</div>
+    <div class="input grouped_input">
+      <label for="codiceColore">Codice colore</label>
+      <p-listbox
+        [options]="options"
+        [(ngModel)]="codiceColore"
+        optionLabel="name"
+        optionValue="value"
+        class="w-full md:w-56"
+      />
+    </div>
+
+    <p-button
+      label="ACCETTA PAZIENTE"
+      icon="pi pi-check"
+      (click)="accettaPaziente()"
+      [disabled]="!validateInput()"
+    />
+  </div>
