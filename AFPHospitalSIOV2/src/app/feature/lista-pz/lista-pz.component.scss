@@ -4,3 +4,10 @@
   flex-wrap: wrap;
   margin: 3%;
 }
+
+.buttons{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}

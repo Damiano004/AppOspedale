@@ -13,10 +13,21 @@
       </div>
       <br>
       <ng-template #footer>
-          <div class="buttons">
-              <p-button label="TRASFERISCI" severity="secondary" class="w-full" styleClass="w-full" (click)="api.traferisciPaziente(pz().id_paziente)"/>
-              <p-button label="DIMETTI" class="w-full" styleClass="w-full" (click)="api.dimettiPaziente(pz().id_paziente)"/>
-          </div>
+        <div class="buttons">
+          <p-button
+            label="TRASFERISCI"
+            severity="secondary"
+            class="w-full"
+            styleClass="w-full"
+            (click)="api.traferisciPaziente(pz().id_paziente)"
+          />
+          <p-button
+            label="DIMETTI"
+            class="w-full"
+            styleClass="w-full"
+            (click)="api.dimettiPaziente(pz().id_paziente)"
+          />
+        </div>
       </ng-template>
   </p-card>
 </div>
