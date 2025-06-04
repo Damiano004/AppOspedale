@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.15.29",
     "mysql2": "^3.14.0",
     "serverless-offline": "^14.4.0"
   },

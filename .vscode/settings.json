@@ -1,5 +1,32 @@
 {
-    "cSpell.words": [
-        "er"
+"restoreTerminals.terminals": [
+  //git
+  {
+    "splitTerminals": [
+      {
+        "name": "git",
+        "commands": ["& 'C:\\Program Files\\Git\\bin\\bash.exe' -i -c \" exec bash\""]
+      }
     ]
+  },
+  // Angular
+  {
+    "splitTerminals": [
+      {
+        "name": "angular",
+        "commands": ["cd AFPHospitalSIOV2", "npm run start"]
+      }
+    ]
+  },
+  // Serverless
+  {
+    "splitTerminals": [
+      {
+        "name": "serverless",
+        "commands": ["cd AFPHospitalAPI", "npx serverless offline"]
+      }
+    ]
+  }
+],
+"sqltools.connections": []
 }
