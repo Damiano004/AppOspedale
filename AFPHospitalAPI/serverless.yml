@@ -50,6 +50,13 @@ functions: # AWS LAMBDA functions
       - httpApi:
           path: /accetta-pz
           method: post
+      
+  accetta-pz-trasferta:
+    handler: pazienti.accettaPzTrasferta
+    events:
+      - httpApi:
+          path: /accetta-trasferta
+          method: put
 
   ## CODICE PZ
   trasferisci-pz:

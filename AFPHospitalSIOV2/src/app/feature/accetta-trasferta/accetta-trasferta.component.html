@@ -1,0 +1,21 @@
+<p-select
+    [options]="api.listaOs()"
+    (onChange)="changeHospital($event)"
+    optionValue="id"
+    placeholder="Seleziona un ospedale"
+    class="w-full md:w-56"
+  >
+  <ng-template let-hospital pTemplate="item">
+    {{ hospital.nome }} - {{ hospital.citta }}
+  </ng-template>
+  <ng-template let-hospital pTemplate="selectedItem">
+    {{ hospital.nome }} - {{ hospital.citta }}
+  </ng-template>
+  </p-select>
+<div class="list">
+  @for (pz of api.listaInTrasferta(); track pz.id_paziente){
+    <app-transfer-card [pz]="pz"/>
+  } @empty {
+    <h3>NON CI SONO PAZIENTI</h3>
+  }
+</div>

@@ -1,3 +1,4 @@
+import { Reparto, StatoPZ } from './../models/Paziente.model';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import {CreazionePaziente, Ospedale, Paziente} from '../models/Paziente.model';
 import { HttpClient } from '@angular/common/http';
@@ -17,14 +18,17 @@ export class AFPHospitalAPIService {
 
   readonly #selectedHospital = signal<number>(1);
   readonly #listaOspedali = signal<Ospedale[]>([]);
-
-
-  /**
-   * Signal che gestisce i Pazienti
-   */
   readonly #listaPz = signal<Paziente[]>([]);
-  listaPz = computed(() => this.#listaPz());
+  readonly #listaReparti = signal<Reparto[]>([]);
+
   listaOs = computed(() => this.#listaOspedali());
+  listaRep = computed(() => this.#listaReparti());
+  listaPz = computed(() =>
+    this.#listaPz().filter(pz => pz.stato !== 'TRASFERITO')
+  );
+  listaInTrasferta = computed(() =>
+    this.#listaPz().filter(pz => pz.stato === 'TRASFERITO')
+  );
 
   changeHospital(newHospital: any){
     console.log("value:")
@@ -56,6 +60,28 @@ export class AFPHospitalAPIService {
       map((res) => JSON.parse(res.body as string) as Ospedale[])
     )
     .subscribe((data) => this.#listaOspedali.set(data));
+  }
+
+  getListaReparti(): void{
+    console.log("calling ",this.#URL+"/lista-reparti/"+this.#selectedHospital());
+    this.#http.get<HttpRes>(this.#URL+"/lista-reparti/"+this.#selectedHospital())
+    .pipe(
+      retry(3),
+      map((res) => JSON.parse(res.body as string) as Reparto[])
+    )
+    .subscribe((data) => this.#listaReparti.set(data))
+    console.log("ritornato i reparti dell'ospedale ",this.#selectedHospital(), " length: ",this.#listaReparti().length)
+  }
+
+  accettaPazienteTrasferito(params:{ idPz: number,stato: StatoPZ|null; id_reparto: number|null}): void {
+    this.#http.put<HttpRes>(this.#URL+"/accetta-trasferta",params)
+    .pipe(
+      retry(3),
+      finalize(() => this.getListaPazienti())
+    )
+    .subscribe(data=>{
+      if(data.state === 'KO') console.error(data.error);
+    })
   }
 
   accettaPaziente(pz: CreazionePaziente): void{

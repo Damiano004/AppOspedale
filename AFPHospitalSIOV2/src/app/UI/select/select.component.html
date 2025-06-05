@@ -1,0 +1,15 @@
+<p-select
+  [options]="api.listaOs()"
+  (onChange)="cambiaIdOs($event)"
+  optionValue="id"
+  placeholder="Seleziona un ospedale"
+  class="w-full md:w-56"
+  appendTo="body"
+>
+  <ng-template let-hospital pTemplate="item">
+    {{ hospital.nome }} - {{ hospital.citta }}
+  </ng-template>
+  <ng-template let-hospital pTemplate="selectedItem">
+    {{ hospital.nome }} - {{ hospital.citta }}
+  </ng-template>
+</p-select>

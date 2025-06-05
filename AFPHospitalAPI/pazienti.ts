@@ -46,7 +46,7 @@ export const listaPz = async (event) => {
                 a.data_nascita,
                 a.codice_fiscale
             FROM Paziente p 
-            JOIN Reparto r ON p.reparto_id = r.id
+            LEFT JOIN Reparto r ON p.reparto_id = r.id
             JOIN Anagrafica a ON p.anagrafica_id = a.id
             WHERE p.id_ospedale = ?;`,
             [pathParam['id']]
@@ -93,7 +93,7 @@ export const listaRepartiOspedale = async(event) =>{
 
         const [row] = await connection.execute(
             `
-                SELECT r.nome, r.descrizione
+                SELECT r.id, r.nome, r.descrizione
                     FROM Ospedali o
                     JOIN Ospedali_Reparto osr ON o.id = osr.id_ospedale
                     JOIN Reparto r  ON r.id = osr.id_reparto
@@ -102,6 +102,36 @@ export const listaRepartiOspedale = async(event) =>{
             [pathParam['id']]
         );
         return createHttpResponceOK(row);
+    }catch(error){
+        return createHttpResponceKO(error);
+    }finally{
+        connection.end();
+    }
+}
+
+export const accettaPzTrasferta = async(event) =>{
+    let connection;
+
+    try{
+        connection = await mysql.createConnection(dbConfig);
+
+        if (!event.body) {
+            throw new Error("Non è stato passato il paziente nel body della richiesta");
+        }
+
+        let pzParamTmp = JSON.parse(event.body.trim());
+
+        await connection.execute(`
+                UPDATE Paziente
+                SET stato = ?, reparto_id = ?
+                WHERE id = ?
+            `,
+            [pzParamTmp.stato, pzParamTmp.id_reparto, pzParamTmp.idPz]
+        );
+        return createHttpResponceOK({
+            messaggio: "Trasferito il paziente",
+            pzId: pzParamTmp.idPz
+        });
     }catch(error){
         return createHttpResponceKO(error);
     }finally{

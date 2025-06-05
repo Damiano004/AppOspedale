@@ -19,6 +19,12 @@ export interface Ospedale{
   citta: string
 };
 
+export interface Reparto{
+  id: number,
+  nome: string,
+  descrizione: string
+}
+
 export interface CreazionePaziente{
   nome: string,
   cognome: string,
@@ -39,4 +45,5 @@ export type CodiceColore = 'BIANCO' |
 export type StatoPZ = 'IN CARICO' |
 'TRASFERITO' |
 'DIMESSO' |
-'NON FORNITO';
+'NON FORNITO'|
+'IN ATTESA';

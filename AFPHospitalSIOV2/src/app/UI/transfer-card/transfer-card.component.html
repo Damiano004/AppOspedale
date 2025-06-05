@@ -27,11 +27,11 @@
     <ng-template #footer>
       <div class="buttons">
         <p-button
-          label="TRASFERISCI"
-          severity="secondary"
+          label="ACCETTA"
+          severity="success"
           class="w-full"
           styleClass="w-full"
-          (click)="mostraPopUp()"
+          (onClick)="mostraPopUp()"
         />
         <p-dialog
           [(visible)]="visibile"
@@ -46,8 +46,24 @@
             </div>
           </ng-template>
           <div class="flex items-center gap-4 mb-4">
-            <label for="ospedale" class="font-semibold w-24">OSPEDALE ALLA QUALE TRASFERIRE IL PAZIENTE</label><br>
-            <app-select [(idOs)]="idOs"></app-select>
+            <label for="reparto" class="font-semibold w-24">REPARTO</label><br>
+            <p-select
+              id="reparto"
+              [options]="api.listaRep()"
+              (onChange)="cambiaReparto($event)"
+              placeholder="Seleziona un reparto"
+              optionLabel="nome"
+              class="w-full md:w-56"
+              appendTo="body"/>
+            <br><br>
+            <label for="stato" class="font-semibold w-24">STATO</label><br>
+            <p-select
+              id="stato"
+              [options]="statiPZ"
+              (onChange)="cambiaStato($event)"
+              placeholder="Seleziona uno stato"
+              class="w-full md:w-56"
+              appendTo="body"/>
           </div>
           <ng-template #footer>
             <p-button
@@ -59,17 +75,10 @@
             <p-button
               label="TRASFERISCI"
               severity="success"
-              (click)="trasferisciPaziente()"
-              [disabled]="isDisabeled()"
+              (click)="accettaTrasferimento()"
             />
           </ng-template>
         </p-dialog>
-        <p-button
-          label="DIMETTI"
-          class="w-full"
-          styleClass="w-full"
-          (click)="api.dimettiPaziente(pz().id_paziente)"
-        />
       </div>
     </ng-template>
   </p-card>
