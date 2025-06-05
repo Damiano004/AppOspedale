@@ -1,5 +1,19 @@
 <div class="buttons">
-  <p-select [options]="api.listaOs()" (onChange)="api.changeHospital($event)" optionLabel="nome" optionValue="id"  placeholder="Seleziona un ospedale" class="w-full md:w-56" />
+  <p-select
+    [options]="api.listaOs()"
+    (onChange)="api.changeHospital($event)"
+    optionValue="id"
+    placeholder="Seleziona un ospedale"
+    class="w-full md:w-56"
+  >
+  <ng-template let-hospital pTemplate="item">
+    {{ hospital.nome }} - {{ hospital.citta }}
+  </ng-template>
+  <ng-template let-hospital pTemplate="selectedItem">
+    {{ hospital.nome }} - {{ hospital.citta }}
+  </ng-template>
+  </p-select>
+  
   <p-button
     label="OTTIENI I PAZIENTI"
     size="large"

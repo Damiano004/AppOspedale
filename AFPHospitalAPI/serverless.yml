@@ -56,7 +56,7 @@ functions: # AWS LAMBDA functions
     handler: pazienti.trasferisciPz
     events:
       - httpApi: 
-          path: /trasferisci-pz/{id}
+          path: /trasferisci-pz/{idPz}/{idOs}
           method: put
   
   dimetti-pz: 

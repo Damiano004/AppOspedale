@@ -65,7 +65,7 @@ export const listaOspedali = async() =>{
     try{
         connection = await mysql.createConnection(dbConfig);
 
-        const [row] = await connection.execute("SELECT id, nome, città FROM Ospedali");
+        const [row] = await connection.execute("SELECT id, nome, citta FROM Ospedali");
 
         return createHttpResponceOK(row);
     }catch (error){
@@ -165,16 +165,16 @@ export const trasferisciPz = async (event) => {
         }
 
         let pathParam = event.pathParameters;
-        if (!pathParam['id']) {
-            throw new Error("Non è stato trovato il parametro 'ID'");
+        if (!pathParam['idPz'] && !pathParam['idOs']) {
+            throw new Error("Non sono stati trovati uno o più id nell'URL");
         }
 
         const [updatedPazient] = await connection.execute(`
             UPDATE Paziente p 
-            SET stato = 'TRASFERITO', reparto_id = NULL 
-            WHERE p.id = ?;
+                SET stato = 'TRASFERITO', reparto_id = NULL, id_ospedale = ?
+                WHERE p.id = ?;
         `,
-        [pathParam['id']]);
+        [pathParam['idOs'],pathParam['idPz']]);
 
         return createHttpResponceOK({
             messaggio: updatedPazient.info,
