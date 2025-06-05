@@ -48,6 +48,55 @@ export const listaPz = async () => {
     }
 };
 
+export const listaOspedali = async() =>{
+    let connection;
+    try{
+        connection = await mysql.createConnection(dbConfig);
+
+        const [row] = await connection.execute("SELECT nome, città FROM Ospedali");
+
+        return createHttpResponceOK(row);
+    }catch (error){
+        return createHttpResponceKO(error);
+    }finally{
+        connection.end();
+    }
+}
+
+export const listaRepartiOspedale = async(event) =>{
+    let connection;
+
+    try{
+        connection = await mysql.createConnection(dbConfig);
+
+        if(!event.pathParameters){
+            throw new Error("Non è stato passato l'ospedale nella query della richiesta");
+        }
+
+        let pathParam = event.pathParameters;
+
+        if (!pathParam['id']) {
+            throw new Error("Non è stato trovato il parametro 'ID'");
+        }
+
+        const [row] = await connection.execute(
+            `
+                SELECT r.nome, r.descrizione
+                    FROM Ospedali o
+                    JOIN Ospedali_Reparto osr ON o.id = osr.id_ospedale
+                    JOIN Reparto r  ON r.id = osr.id_reparto
+                    WHERE o.id = ?
+            `,
+            [pathParam['id']]
+        );
+        return createHttpResponceOK(row);
+    }catch(error){
+        return createHttpResponceKO(error);
+    }finally{
+        connection.end();
+    }
+}
+
 export const accettaPz = async (event) => {
     let connection;
 

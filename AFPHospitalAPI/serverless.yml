@@ -30,6 +30,20 @@ functions: # AWS LAMBDA functions
           path: /lista-pz
           method: get
 
+  lista-ospedali:
+    handler: pazienti.listaOspedali
+    events:
+      - httpApi:
+          path: /lista-ospedali
+          method: get
+    
+  lista-reparti:
+    handler: pazienti.listaRepartiOspedale
+    events:
+      - httpApi:
+          path: /lista-reparti/{id}
+          method: get
+
   accetta-pz:
     handler: pazienti.accettaPz
     events:
