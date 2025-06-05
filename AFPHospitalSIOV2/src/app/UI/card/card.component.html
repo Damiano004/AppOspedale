@@ -1,34 +1,89 @@
 <div class="card">
-  <p-card [style]="{ width: '20rem', overflow: 'hidden', border: '2px solid #800080', backgroundColor: '#F5F5F5'}">
-      <ng-template #title>{{pz().cognome}} {{pz().nome}}</ng-template>
-      <ng-template #subtitle>Data di nascita: {{pz().data_nascita | date:'dd/MM/YYYY'}}</ng-template>
-      <p>
-        Codice Paziente:  {{pz().codice}}<br>
-        Codice fiscale:   {{pz().codice_fiscale}}
-      </p>
-      <br>
-      <div class="status">
-        <p>CODICE {{pz().codice_colore}}</p>
-        <p-divider layout="vertical"/>
-        <p>{{pz().stato}}</p>
+  <p-card
+    [style]="{
+      width: '20rem',
+      overflow: 'hidden',
+      border: '2px solid #800080',
+      backgroundColor: '#F5F5F5'
+    }"
+  >
+    <ng-template #title>{{ pz().cognome }} {{ pz().nome }}</ng-template>
+    <ng-template #subtitle
+      >Data di nascita:
+      {{ pz().data_nascita | date : "dd/MM/YYYY" }}</ng-template
+    >
+    <p>
+      Codice Paziente: {{ pz().codice }}<br />
+      Codice fiscale: {{ pz().codice_fiscale }}
+    </p>
+    <br />
+    <div class="status">
+      <p>CODICE {{ pz().codice_colore }}</p>
+      <p-divider layout="vertical" />
+      <p>{{ pz().stato }}</p>
+    </div>
+    <br />
+    <ng-template #footer>
+      <div class="buttons">
+        <p-button
+          label="TRASFERISCI"
+          severity="secondary"
+          class="w-full"
+          styleClass="w-full"
+          (click)="mostraPopUp()"
+        />
+        <p-dialog
+          [(visible)]="visibile"
+          [modal]="true"
+          [style]="{ width: '30rem' }"
+        >
+          <ng-template #header>
+            <div class="inline-flex items-center justify-center gap-2">
+              <span class="font-bold whitespace-nowrap"
+                >TRASFERISCI PAZIENTE</span
+              >
+            </div>
+          </ng-template>
+          <div class="flex items-center gap-4 mb-4">
+            <label for="ospedale" class="font-semibold w-24">OSPEDALE ALLA QUALE TRASFERIRE IL PAZIENTE</label><br>
+            <p-select
+              [options]="api.listaOs()"
+              (onChange)="cambiaIdOs($event)"
+              optionValue="id"
+              placeholder="Seleziona un ospedale"
+              class="w-full md:w-56"
+              appendTo="body"
+            >
+              <ng-template let-hospital pTemplate="item">
+                {{ hospital.nome }} - {{ hospital.citta }}
+              </ng-template>
+              <ng-template let-hospital pTemplate="selectedItem">
+                {{ hospital.nome }} - {{ hospital.citta }}
+              </ng-template>
+            </p-select>
+          </div>
+          <ng-template #footer>
+            <p-button
+              label="ANNULLA"
+              [text]="true"
+              severity="secondary"
+              (click)="visibile = false"
+            />
+            <p-button
+              label="TRASFERISCI"
+              severity="success"
+              (click)="trasferisciPaziente()"
+              [disabled]="isDisabeled()"
+            />
+          </ng-template>
+        </p-dialog>
+        <p-button
+          label="DIMETTI"
+          class="w-full"
+          styleClass="w-full"
+          (click)="api.dimettiPaziente(pz().id_paziente)"
+        />
       </div>
-      <br>
-      <ng-template #footer>
-        <div class="buttons">
-          <p-button
-            label="TRASFERISCI"
-            severity="secondary"
-            class="w-full"
-            styleClass="w-full"
-            (click)="api.traferisciPaziente(pz().id_paziente)"
-          />
-          <p-button
-            label="DIMETTI"
-            class="w-full"
-            styleClass="w-full"
-            (click)="api.dimettiPaziente(pz().id_paziente)"
-          />
-        </div>
-      </ng-template>
+    </ng-template>
   </p-card>
 </div>

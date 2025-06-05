@@ -39,14 +39,6 @@ export class AFPHospitalAPIService {
     this.#selectedHospital.set(tempId);
     this.getListaPazienti();
   }
-  /**
-   * 4 api
-   *
-   * - LISTA-PZ
-   * - ACCETTA-PZ
-   * - TRAFERISCI-PZ
-   * - DIMETTI-PZ
-   */
 
   getListaPazienti(): void{
     this.#http.get<HttpRes>(this.#URL+"/lista-pz/"+this.#selectedHospital())
@@ -58,8 +50,6 @@ export class AFPHospitalAPIService {
   }
 
   getListaOspedali(): void{
-    let ospedali: Ospedale[] = [];
-
     this.#http.get<HttpRes>(this.#URL+"/lista-ospedali")
     .pipe(
       retry(3),
@@ -80,8 +70,9 @@ export class AFPHospitalAPIService {
       });
   }
 
-  traferisciPaziente(idPaziente: number): void{
-    this.#http.put<HttpRes>(`${this.#URL}/trasferisci-pz/${idPaziente}`, {})
+  traferisciPaziente(idPaziente: number, idOspedale: number): void{
+    console.log("Sending ",`${this.#URL}/trasferisci-pz/${idPaziente}/${idOspedale}`);
+    this.#http.put<HttpRes>(`${this.#URL}/trasferisci-pz/${idPaziente}/${idOspedale}`, {})
       .pipe(
         retry(3),
         finalize(() => this.getListaPazienti())
