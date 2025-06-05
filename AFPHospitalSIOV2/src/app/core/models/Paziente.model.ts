@@ -13,6 +13,12 @@ export interface Paziente{
   codice_fiscale: string,
 };
 
+export interface Ospedale{
+  id: number,
+  nome: string,
+  citta: string
+};
+
 export interface CreazionePaziente{
   nome: string,
   cognome: string,

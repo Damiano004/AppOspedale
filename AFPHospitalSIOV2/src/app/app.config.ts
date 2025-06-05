@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideAppInitializer(() =>
-      inject(AFPHospitalAPIService).getListaPazienti()
+      inject(AFPHospitalAPIService).getListaOspedali()
     ),
     provideAnimationsAsync(),
     providePrimeNG({

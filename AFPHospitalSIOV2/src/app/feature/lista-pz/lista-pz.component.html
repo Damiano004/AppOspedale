@@ -1,4 +1,5 @@
 <div class="buttons">
+  <p-select [options]="api.listaOs()" (onChange)="api.changeHospital($event)" optionLabel="nome" optionValue="id"  placeholder="Seleziona un ospedale" class="w-full md:w-56" />
   <p-button
     label="OTTIENI I PAZIENTI"
     size="large"

@@ -13,12 +13,22 @@ const dbConfig = {
     port: process.env.port,
 };
 
-export const listaPz = async () => {
+export const listaPz = async (event) => {
     let connection;
 
     try {
         // Connesione al DB
         connection = await mysql.createConnection(dbConfig);
+
+        if(!event.pathParameters){
+            throw new Error("Non è stato passato l'ospedale nella query della richiesta");
+        }
+
+        let pathParam = event.pathParameters;
+
+        if (!pathParam['id']) {
+            throw new Error("Non è stato trovato il parametro 'ID'");
+        }
 
         // Eseguiamo la query
         const [row] = await connection.execute(`
@@ -37,9 +47,11 @@ export const listaPz = async () => {
                 a.codice_fiscale
             FROM Paziente p 
             JOIN Reparto r ON p.reparto_id = r.id
-            JOIN Anagrafica a ON p.anagrafica_id = a.id;
-        `);
-
+            JOIN Anagrafica a ON p.anagrafica_id = a.id
+            WHERE p.id_ospedale = ?;`,
+            [pathParam['id']]
+        );
+        
         return createHttpResponceOK(row);
     } catch (error) {
         return createHttpResponceKO(error);
@@ -53,7 +65,7 @@ export const listaOspedali = async() =>{
     try{
         connection = await mysql.createConnection(dbConfig);
 
-        const [row] = await connection.execute("SELECT nome, città FROM Ospedali");
+        const [row] = await connection.execute("SELECT id, nome, città FROM Ospedali");
 
         return createHttpResponceOK(row);
     }catch (error){

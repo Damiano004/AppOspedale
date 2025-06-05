@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import {CreazionePaziente, Paziente} from '../models/Paziente.model';
+import {CreazionePaziente, Ospedale, Paziente} from '../models/Paziente.model';
 import { HttpClient } from '@angular/common/http';
 import { HttpRes } from '../models/RespManager';
 import {finalize, map, retry} from 'rxjs';
@@ -15,13 +15,30 @@ export class AFPHospitalAPIService {
   readonly #http = inject(HttpClient);
   readonly #router = inject(Router);
 
+  readonly #selectedHospital = signal<number>(1);
+  readonly #listaOspedali = signal<Ospedale[]>([]);
+
 
   /**
    * Signal che gestisce i Pazienti
    */
   readonly #listaPz = signal<Paziente[]>([]);
   listaPz = computed(() => this.#listaPz());
+  listaOs = computed(() => this.#listaOspedali());
 
+  changeHospital(newHospital: any){
+    console.log("value:")
+    console.log(newHospital);
+    let tempId = newHospital.value as number;
+
+    if(!tempId || tempId< 0){
+      console.log("il nuovo ospedale inserito non esiste o è stato inserito un id minore di 0");
+      return;
+    }
+    console.log("messo un id: ",tempId)
+    this.#selectedHospital.set(tempId);
+    this.getListaPazienti();
+  }
   /**
    * 4 api
    *
@@ -32,12 +49,23 @@ export class AFPHospitalAPIService {
    */
 
   getListaPazienti(): void{
-    this.#http.get<HttpRes>(this.#URL+"/lista-pz")
+    this.#http.get<HttpRes>(this.#URL+"/lista-pz/"+this.#selectedHospital())
     .pipe(
       retry(3),
       map((res) => JSON.parse(res.body as string) as Paziente[])
     )
     .subscribe((data) => this.#listaPz.set(data));
+  }
+
+  getListaOspedali(): void{
+    let ospedali: Ospedale[] = [];
+
+    this.#http.get<HttpRes>(this.#URL+"/lista-ospedali")
+    .pipe(
+      retry(3),
+      map((res) => JSON.parse(res.body as string) as Ospedale[])
+    )
+    .subscribe((data) => this.#listaOspedali.set(data));
   }
 
   accettaPaziente(pz: CreazionePaziente): void{

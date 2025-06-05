@@ -27,7 +27,7 @@ functions: # AWS LAMBDA functions
     handler: pazienti.listaPz
     events:
       - httpApi:
-          path: /lista-pz
+          path: /lista-pz/{id}
           method: get
 
   lista-ospedali:
