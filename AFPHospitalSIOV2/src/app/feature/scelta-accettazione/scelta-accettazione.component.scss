@@ -1,0 +1,25 @@
+.full-screen-container {
+  height: 89vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.giant-button {
+  width: 30%;
+  aspect-ratio: 1 / 1;
+  font-size: 2rem;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin: 3%;
+  font-size: 300%;
+}
+
+.thick-divider.p-divider.p-divider-vertical::before {
+  width: 5px;
+  background-color: #ccc;
+}
+

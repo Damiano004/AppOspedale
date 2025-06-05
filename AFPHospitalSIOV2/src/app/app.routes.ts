@@ -8,6 +8,12 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'accetta-scelta',
+    loadComponent: () => import('./feature/scelta-accettazione/scelta-accettazione.component')
+      .then(m => m.SceltaAccettazioneComponent),
+    pathMatch: 'full'
+  },
+  {
     path: 'accetta-pz',
     loadComponent: () => import('./feature/accetta-pz/accetta-pz.component')
       .then(m => m.AccettaPzComponent),
