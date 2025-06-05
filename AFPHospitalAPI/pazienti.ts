@@ -163,10 +163,10 @@ export const accettaPz = async (event) => {
         let pzNewID = pzCreation.insertId;
 
         const [newPazient] = await connection.execute(`
-            INSERT INTO Paziente (anagrafica_id, reparto_id, codice, codice_colore, stato)
-            VALUES (?, (SELECT id from Reparto r WHERE nome = 'Pronto Soccorso' LIMIT 1), ?, ?, ?);
+            INSERT INTO Paziente (anagrafica_id, reparto_id, codice, codice_colore, stato, id_ospedale)
+            VALUES (?, (SELECT id from Reparto r WHERE nome = 'Pronto Soccorso' LIMIT 1), ?, ?, ?, ?);
         `,
-        [pzNewID, pzTmp.codice, pzTmp.codiceColore, pzTmp.stato]);
+        [pzNewID, pzTmp.codice, pzTmp.codiceColore, pzTmp.stato, pzTmp.id_ospedale]);
 
 
         return createHttpResponceOK({

@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ListboxModule } from 'primeng/listbox';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accetta-pz',
@@ -23,6 +24,7 @@ import { ButtonModule } from 'primeng/button';
 })
 export class AccettaPzComponent {
   readonly #AFPHospitalAPI = inject(AFPHospitalAPIService);
+  readonly #router = inject(Router);
   readonly options = [
   { name: '⚪ BIANCO', value: 'BIANCO' },
   { name: '🟢 VERDE', value: 'VERDE' },
@@ -67,10 +69,12 @@ export class AccettaPzComponent {
       codiceFiscale: this.codiceFiscale(),
       codiceColore: this.codiceColore(),
       stato: 'IN CARICO',
-      codice: this.calcolaCodicePZ()
+      codice: this.calcolaCodicePZ(),
+      id_ospedale: -1
     }
-
+    console.log("mandando paziente");
     this.#AFPHospitalAPI.accettaPaziente(pzTmp);
+    this.#router.navigate(['/lista-pz']);
   }
 
   /**
@@ -86,7 +90,7 @@ export class AccettaPzComponent {
     ) return false;
     if (this.codiceColore() === 'NON FORNITO') return false;
     if (!this.dataNascitaParse()) return false;
-
+    if (this.#AFPHospitalAPI.currentHospital() === -1) return false;
 
     return true;
   }

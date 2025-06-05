@@ -25,4 +25,8 @@ export class CardComponent{
   mostraPopUp() {
     this.visibile.set(true);
   }
+
+  isDimesso(): boolean{
+    return this.pz().stato === 'DIMESSO';
+  }
 }

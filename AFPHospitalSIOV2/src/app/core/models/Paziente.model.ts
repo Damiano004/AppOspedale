@@ -32,7 +32,8 @@ export interface CreazionePaziente{
   codiceFiscale: string,
   codice: string,
   codiceColore: CodiceColore,
-  stato: StatoPZ
+  stato: StatoPZ,
+  id_ospedale: number
 }
 
 export type CodiceColore = 'BIANCO' |

@@ -38,6 +38,8 @@
           label="DIMETTI"
           class="w-full"
           styleClass="w-full"
+          severity="danger"
+          [disabled]="isDimesso()"
           (click)="api.dimettiPaziente(pz().id_paziente)"
         />
       </div>

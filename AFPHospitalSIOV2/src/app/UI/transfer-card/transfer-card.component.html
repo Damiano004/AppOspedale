@@ -88,6 +88,13 @@
           (onClick)="mostraTrasferisci()"
         />
         <app-transfer-overlay [pz]="pz()" [(visibile)]="overlayTrasferisci"/>
+        <p-button
+          label="DIMETTI"
+          class="w-full"
+          styleClass="w-full"
+          severity="danger"
+          (onClick)="api.dimettiPaziente(pz().id_paziente)"
+        />
       </div>
     </ng-template>
   </p-card>

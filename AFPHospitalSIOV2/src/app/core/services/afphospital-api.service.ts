@@ -16,13 +16,14 @@ export class AFPHospitalAPIService {
   readonly #http = inject(HttpClient);
   readonly #router = inject(Router);
 
-  readonly #selectedHospital = signal<number>(1);
+  readonly #selectedHospital = signal<number>(-1);
   readonly #listaOspedali = signal<Ospedale[]>([]);
   readonly #listaPz = signal<Paziente[]>([]);
   readonly #listaReparti = signal<Reparto[]>([]);
 
   listaOs = computed(() => this.#listaOspedali());
   listaRep = computed(() => this.#listaReparti());
+  currentHospital = computed(() => this.#selectedHospital());
   listaPz = computed(() =>
     this.#listaPz().filter(pz => pz.stato !== 'TRASFERITO')
   );
@@ -85,6 +86,8 @@ export class AFPHospitalAPIService {
   }
 
   accettaPaziente(pz: CreazionePaziente): void{
+    pz.id_ospedale = this.#selectedHospital();
+    console.log("sending", pz);
     this.#http.post<HttpRes>(`${this.#URL}/accetta-pz`, pz)
       .pipe(
         retry(3),
