@@ -7,12 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
-import { SelectComponent } from "../select/select.component";
+import { TransferOverlayComponent } from "../transfer-overlay/transfer-overlay.component";
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  imports: [DatePipe, CardModule, ButtonModule, DividerModule, DialogModule, SelectModule, SelectComponent],
+  imports: [DatePipe, CardModule, ButtonModule, DividerModule, DialogModule, SelectModule, TransferOverlayComponent],
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent{
@@ -20,21 +20,9 @@ export class CardComponent{
   readonly api = inject(AFPHospitalAPIService);
   readonly idOs = signal<number>(-1);
 
-  visibile: boolean = false;
+  readonly visibile = signal<boolean>(false);
 
   mostraPopUp() {
-    this.visibile = true;
-  }
-
-  isDisabeled(): boolean{
-    if(this.idOs() <0){
-      return true;
-    }
-    return false;
-  }
-
-  trasferisciPaziente(){
-    this.visibile = false;
-    this.api.traferisciPaziente(this.pz().id_paziente, this.idOs())
+    this.visibile.set(true);
   }
 }

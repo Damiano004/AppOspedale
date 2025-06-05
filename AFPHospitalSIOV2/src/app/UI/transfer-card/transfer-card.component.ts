@@ -7,12 +7,13 @@ import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
 import { AFPHospitalAPIService } from '../../core/services/afphospital-api.service';
 import { SelectModule } from 'primeng/select';
+import { TransferOverlayComponent } from "../transfer-overlay/transfer-overlay.component";
 
 @Component({
   selector: 'app-transfer-card',
   templateUrl: './transfer-card.component.html',
   styleUrls: ['./transfer-card.component.scss'],
-  imports: [CardModule, ButtonModule, DatePipe, DividerModule, DialogModule, SelectModule]
+  imports: [CardModule, ButtonModule, DatePipe, DividerModule, DialogModule, SelectModule, TransferOverlayComponent]
 })
 export class TransferCardComponent implements OnInit{
   readonly api = inject(AFPHospitalAPIService);
@@ -21,14 +22,20 @@ export class TransferCardComponent implements OnInit{
   readonly stato = signal<StatoPZ>('NON FORNITO');
   readonly idRep = signal<number|null>(null);
 
-  visibile: boolean = false;
+  overlayAccetta: boolean = false;
+  overlayTrasferisci = signal<boolean>(false);
 
   ngOnInit(): void {
     this.api.getListaReparti();
   }
 
-  mostraPopUp() {
-    this.visibile = true;
+  mostraAccetta() {
+    this.overlayAccetta = true;
+  }
+
+  mostraTrasferisci(){
+    console.log("seting to true");
+    this.overlayTrasferisci.set(true);
   }
 
   cambiaReparto(newRep: any){
@@ -55,7 +62,7 @@ export class TransferCardComponent implements OnInit{
   }
 
   accettaTrasferimento(): void{
-    this.visibile = false;
+    this.overlayAccetta = false;
     let statoValue = this.stato() === 'NON FORNITO' ? null : this.stato();
     let params = {
       idPz: this.pz().id_paziente,
