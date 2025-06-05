@@ -1,7 +1,29 @@
 <nav class="navbar">
-  <button routerLink="/lista-pz" class="button">LISTA PAZIENTI</button>
-  <button routerLink="/accetta-pz" class="button">ACCETTA PAZIENTI</button>
-  <button routerLink="/accetta-trasferta" class="button">ACCETTA TRASFERTA</button>
+  <div class="nav-left">
+    <button routerLink="/lista-pz" class="button">LISTA PAZIENTI</button>
+    <button routerLink="/accetta-pz" class="button">ACCETTA PAZIENTI</button>
+    <button routerLink="/accetta-trasferta" class="button">ACCETTA TRASFERTA</button>
+  </div>
+
+  <div class="nav-center">
+    <p-select
+      [options]="api.listaOs()"
+      (onChange)="api.changeHospital($event)"
+      optionValue="id"
+      placeholder="Seleziona un ospedale"
+      class="w-full md:w-56"
+      [style.width]="'400px'"
+    >
+    <ng-template let-hospital pTemplate="item">
+      {{ hospital.nome }} - {{ hospital.citta }}
+    </ng-template>
+    <ng-template let-hospital pTemplate="selectedItem">
+      {{ hospital.nome }} - {{ hospital.citta }}
+    </ng-template>
+    </p-select>
+  </div>
+
+  <div class="nav-right"></div>
 </nav>
 <div style="padding-top: 80px"></div>
 <router-outlet />
