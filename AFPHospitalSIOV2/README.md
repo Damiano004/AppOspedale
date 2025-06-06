@@ -1,59 +1,74 @@
-# AFPHospitalSIOV2
+# AFPOspedale
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
 
-## Development server
+Componenti gruppo:
+    Damiano Purin
+    Davide Comper
+    Mael Ossanna Thimon
 
-To start a local development server, run:
 
+Scopo del progetto
+GPI utilizza un sistema sviluppato internamente per gestire le accettazioni al pronto soccorso, già in uso presso diversi clienti.
+
+Il software è disponibile sia in modalità on premise (installato sui server del cliente), sia come servizio cloud (su infrastruttura pubblica o privata). Per questo motivo, il sistema deve poter funzionare in entrambe le modalità.
+
+Il progetto prevede lo sviluppo di una mini-webapp (modulo Angular) che consenta al personale amministrativo e sanitario di gestire l’accesso urgente di un paziente in una struttura di pronto soccorso.
+
+Questa webapp dovrà:
+
+Comunicare con i servizi backend per registrare le accettazioni.
+
+Ricevere dati da applicativi esterni (ad esempio, dati anagrafici del paziente) per supportare meglio gli operatori.
+
+Interfacciarsi con sistemi di terze parti come LIS (Laboratorio), RIS (Radiologia), monitor, sistemi di presenza, ecc.
+
+Tra le informazioni da gestire durante l’accettazione del paziente ci sono, ad esempio:
+
+- Dati anagrafici del paziente;
+
+- Codice di priorità (livello d’urgenza);
+
+- Stato della procedura di accettazione;
+
+- Allergie conosciute;
+
+- Terapie previste;
+
+- Altri dati clinici utili.
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Requisiti
+- Node.js (consigliata versione ≥ 18)
+- npm (incluso con Node.js)
+- Angular CLI (per AFPHospitalSIOV2)
+- Serverless Framework (per AFPHospitalAPI)
+
+## QuickStart
+CARTELLA: ./AFPHospitalAPI:
+- installazione serverless
 ```bash
-ng serve
+npm install serverless-offline --save-dev
+```
+- avvio
+```bash
+npx serverless offline
+```
+CARTELLA ./AFPHospitalSIOV2:
+- installazione angular
+```bash
+npm install
+```
+- installazione primeNG:
+```bash
+npm install primeng @primeng/themes
+npm install primeicons
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+- avvio:
 ```bash
-ng generate component component-name
+npm run start 
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
