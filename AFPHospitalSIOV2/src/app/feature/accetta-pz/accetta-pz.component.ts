@@ -9,6 +9,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { ButtonModule } from 'primeng/button';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-accetta-pz',
@@ -60,8 +61,10 @@ export class AccettaPzComponent {
 
   calcolaCodicePZ(): string{
     if(this.checked){
-      this.nome.set('Temporaneo')
-      this.cognome.set('Paziente')
+      let now = new Date();
+      let formattedNow = formatDate(now, 'dd/MM/yyyy-HH:mm', 'it');
+      this.nome.set(formattedNow);
+      this.cognome.set('Paziente');
       this.tempId++;
       return'000'+this.tempId;
     }
