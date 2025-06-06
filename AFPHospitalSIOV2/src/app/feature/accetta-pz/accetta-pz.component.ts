@@ -1,5 +1,5 @@
 import {Component, computed, inject, signal} from '@angular/core';
-import {CodiceColore, CreazionePaziente, StatoPZ} from '../../core/models/Paziente.model';
+import {CodiceColore, CreazionePaziente} from '../../core/models/Paziente.model';
 import {FormsModule} from '@angular/forms';
 import {AFPHospitalAPIService} from '../../core/services/afphospital-api.service';
 import { DatePickerModule } from 'primeng/datepicker';

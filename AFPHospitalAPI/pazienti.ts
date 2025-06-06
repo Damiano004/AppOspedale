@@ -109,6 +109,54 @@ export const listaRepartiOspedale = async(event) =>{
     }
 }
 
+export const modificaPaziente = async(event) => {
+    let connection;
+
+    try{
+        connection = await mysql.createConnection(dbConfig);
+
+        if(!event.body){
+            throw new Error("Non è stato passato il paziente nel body della richiesta");
+        }
+
+        let pzParamTmp = JSON.parse(event.body.trim());
+
+        await connection.execute(`
+            UPDATE Paziente p
+            JOIN Anagrafica a ON p.anagrafica_id = a.id
+            SET 
+                a.nome = ?, 
+                a.cognome = ?, 
+                a.data_nascita = ?, 
+                a.codice_fiscale = ?, 
+                p.codice_colore = ?, 
+                p.stato = ?, 
+                p.reparto_id = ?,
+                p.codice = ?
+            WHERE p.id = ?;`,
+            [
+                pzParamTmp.nome, 
+                pzParamTmp.cognome, 
+                pzParamTmp.dataNascita, 
+                pzParamTmp.codiceFiscale, 
+                pzParamTmp.codiceColore, 
+                pzParamTmp.stato, 
+                pzParamTmp.reparto,
+                pzParamTmp.codice,
+                pzParamTmp.idPz                
+            ]
+        );
+        return createHttpResponceOK({
+            messaggio: "Modificato il paziente",
+            pzId: pzParamTmp.idPz
+        });
+    }catch(error){
+        return createHttpResponceKO(error);
+    }finally{
+        connection.end();
+    }
+}
+
 export const accettaPzTrasferta = async(event) =>{
     let connection;
 

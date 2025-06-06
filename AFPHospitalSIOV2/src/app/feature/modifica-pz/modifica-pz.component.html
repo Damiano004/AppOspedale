@@ -1,0 +1,39 @@
+  <h1 class="title">ACCETTA PAZIENTI</h1>
+
+  <div class="form">
+    <p-floatlabel variant="on">
+      <label for="nome">Nome</label>
+      <input class="input" pInputText id="nome" [(ngModel)]="nome" autocomplete="off" />
+    </p-floatlabel>
+
+    <p-floatlabel variant="on">
+      <label for="cognome">Cognome</label>
+      <input class="input" pInputText id="cognome" [(ngModel)]="cognome" autocomplete="off" />
+    </p-floatlabel>
+
+    <div class="input grouped_input">
+      <label for="dataNascita">Data di nascita</label>
+      <p-datepicker [style]="{width:'100%'}" id="dataNascita" [showIcon]="true" [(ngModel)]="dataNascita"/>
+    </div>
+
+    <p-floatlabel variant="on">
+      <label for="codiceFiscale">Codice fiscale</label>
+      <input class="input" pInputText id="codiceFiscale" [(ngModel)]="codiceFiscale" autocomplete="off" />
+    </p-floatlabel>
+    <div class="input grouped_input">
+      <label for="codiceColore">Codice colore</label>
+      <p-listbox
+        [options]="options"
+        [(ngModel)]="codiceColore"
+        optionLabel="name"
+        optionValue="value"
+        class="w-full md:w-56"
+      />
+    </div>
+
+    <p-button
+      label="SALVA"
+      icon="pi pi-check"
+      (click)="salvaModifica()"
+    />
+  </div>
