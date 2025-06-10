@@ -40,11 +40,11 @@ export interface ModificaPaziente{
   codice: string,
   nome: string,
   cognome: string,
-  dataNascita: Date,
   codiceFiscale: string,
   codiceColore: CodiceColore,
-  stato: StatoPZ,
-  reparto: number,
+  stato: StatoPZ | null,
+  reparto: number | null,
+  dataNascita: Date,
   idPz: number
 }
 

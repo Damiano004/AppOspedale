@@ -8,17 +8,27 @@ import { DividerModule } from 'primeng/divider';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { TransferOverlayComponent } from "../transfer-overlay/transfer-overlay.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  imports: [DatePipe, CardModule, ButtonModule, DividerModule, DialogModule, SelectModule, TransferOverlayComponent],
+  imports: [
+    DatePipe,
+    CardModule,
+    ButtonModule,
+    DividerModule,
+    DialogModule,
+    SelectModule,
+    TransferOverlayComponent
+  ],
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent{
   readonly pz = input.required<Paziente>();
   readonly api = inject(AFPHospitalAPIService);
   readonly idOs = signal<number>(-1);
+  readonly #router = inject(Router);
 
   readonly visibile = signal<boolean>(false);
 
@@ -28,5 +38,11 @@ export class CardComponent{
 
   isDimesso(): boolean{
     return this.pz().stato === 'DIMESSO';
+  }
+
+  navigaModifica(){
+    this.#router.navigate(['/modifica-pz'], {
+      state: {pz: this.pz()}
+    });
   }
 }

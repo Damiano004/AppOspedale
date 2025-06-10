@@ -1,0 +1,26 @@
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  background-color: #c3c3c3;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 20px;
+}
+
+.grouped_input{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.input{
+  width: 259px;
+  font-size: 18px;
+}

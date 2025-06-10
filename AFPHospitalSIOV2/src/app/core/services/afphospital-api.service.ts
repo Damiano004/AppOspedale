@@ -1,4 +1,4 @@
-import { Reparto, StatoPZ } from './../models/Paziente.model';
+import { ModificaPaziente, Reparto, StatoPZ } from './../models/Paziente.model';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import {CreazionePaziente, Ospedale, Paziente} from '../models/Paziente.model';
 import { HttpClient } from '@angular/common/http';
@@ -97,6 +97,20 @@ export class AFPHospitalAPIService {
         if (data.state === 'KO') console.error(data.error);
         this.#router.navigate(['/lista-pz']);
       });
+  }
+
+  modificaPaziente(pz: ModificaPaziente): void{
+    console.log("Sending ",`${this.#URL}/modifica-pz`);
+    this.#http.put<HttpRes>(`${this.#URL}/modifica-pz`,pz)
+      .pipe(
+        retry(3),
+        finalize(() => this.getListaPazienti())
+      )
+      .subscribe(res => {
+        if(res.state === 'KO'){
+          console.error(res.error);
+        }
+      })
   }
 
   traferisciPaziente(idPaziente: number, idOspedale: number): void{

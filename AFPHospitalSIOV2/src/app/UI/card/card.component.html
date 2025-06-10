@@ -33,6 +33,13 @@
           styleClass="w-full"
           (click)="mostraPopUp()"
         />
+        <p-button
+          label="MODIFICA"
+          severity="info"
+          class="w-full"
+          styleClass="w-full"
+          (onClick)="navigaModifica()"
+        />
         <app-transfer-overlay [pz]="pz()" [(visibile)]="visibile"/>
         <p-button
           label="DIMETTI"

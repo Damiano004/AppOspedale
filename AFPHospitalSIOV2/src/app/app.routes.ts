@@ -20,6 +20,12 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'modifica-pz',
+    loadComponent: () => import('./feature/modifica-pz/modifica-pz.component')
+      .then(m => m.ModificaPzComponent),
+    pathMatch: 'full'
+  },
+  {
     path: 'accetta-trasferta',
     loadComponent: () => import('./feature/accetta-trasferta/accetta-trasferta.component')
       .then(m => m.AccettaTrasfertaComponent),

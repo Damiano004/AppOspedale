@@ -127,7 +127,7 @@ export const modificaPaziente = async(event) => {
             SET 
                 a.nome = ?, 
                 a.cognome = ?, 
-                a.data_nascita = ?, 
+                a.data_nascita = ?,
                 a.codice_fiscale = ?, 
                 p.codice_colore = ?, 
                 p.stato = ?, 
@@ -136,8 +136,8 @@ export const modificaPaziente = async(event) => {
             WHERE p.id = ?;`,
             [
                 pzParamTmp.nome, 
-                pzParamTmp.cognome, 
-                pzParamTmp.dataNascita, 
+                pzParamTmp.cognome,
+                pzParamTmp.dataNascita,
                 pzParamTmp.codiceFiscale, 
                 pzParamTmp.codiceColore, 
                 pzParamTmp.stato, 

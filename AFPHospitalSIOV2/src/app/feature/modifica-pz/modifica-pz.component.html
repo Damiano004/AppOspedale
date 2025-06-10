@@ -1,27 +1,49 @@
   <h1 class="title">ACCETTA PAZIENTI</h1>
 
   <div class="form">
-    <p-floatlabel variant="on">
-      <label for="nome">Nome</label>
-      <input class="input" pInputText id="nome" [(ngModel)]="nome" autocomplete="off" />
-    </p-floatlabel>
+    <div class="flex flex-col gap-2">
+      <label for="nome">NOME</label>
+      <input pInputText id="nome" [(ngModel)]="nome" />
+    </div>
 
-    <p-floatlabel variant="on">
-      <label for="cognome">Cognome</label>
-      <input class="input" pInputText id="cognome" [(ngModel)]="cognome" autocomplete="off" />
-    </p-floatlabel>
+    <div class="flex flex-col gap-2">
+      <label for="cognome">COGNOME</label>
+      <input pInputText id="cognome" [(ngModel)]="cognome" />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="codiceFiscale">CODICE FISCALE</label>
+      <input pInputText id="codiceFiscale" [(ngModel)]="codiceFiscale" />
+    </div>
 
     <div class="input grouped_input">
       <label for="dataNascita">Data di nascita</label>
       <p-datepicker [style]="{width:'100%'}" id="dataNascita" [showIcon]="true" [(ngModel)]="dataNascita"/>
     </div>
 
-    <p-floatlabel variant="on">
-      <label for="codiceFiscale">Codice fiscale</label>
-      <input class="input" pInputText id="codiceFiscale" [(ngModel)]="codiceFiscale" autocomplete="off" />
-    </p-floatlabel>
+    <div class="flex items-center gap-4 mb-4">
+    <label for="reparto" class="font-semibold w-24">REPARTO</label><br>
+    <p-select
+      id="reparto"
+      [options]="api.listaRep()"
+      (onChange)="cambiaReparto($event)"
+      placeholder="Seleziona un reparto"
+      optionLabel="nome"
+      class="w-full md:w-56"
+      appendTo="body"/>
+    <br><br>
+    <label for="stato" class="font-semibold w-24">STATO</label><br>
+    <p-select
+      id="stato"
+      [options]="statiPZ"
+      (onChange)="cambiaStato($event)"
+      placeholder="Seleziona uno stato"
+      class="w-full md:w-56"
+      appendTo="body"/>
+    </div>
+
     <div class="input grouped_input">
-      <label for="codiceColore">Codice colore</label>
+      <label for="codiceColore">CODICE COLORE</label>
       <p-listbox
         [options]="options"
         [(ngModel)]="codiceColore"
